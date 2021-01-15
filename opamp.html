@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+     <script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 	<link rel="icon" href="imgs/favicon.ico">
+       
       <style>
          body {
             background-color: #FFFFFF;
@@ -27,15 +31,19 @@
                   font-style: normal; 
                   font-variant: normal; 
                   font-weight: bold; 
-                  line-height: 0.9; } 
+                  line-height: 0.9; 
+                  margin-bottom:0px;
+} 
             h3 { 
                   font-color: #202C39;
                   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
-                  font-size: 20px; 
-                  font-style: normal; 
+                  font-size: 18px; 
+                  font-style: italic; 
                   font-variant: normal; 
                   font-weight: bold; 
-                  line-height: 0.9; } 
+                  line-height: 0.9;
+                  margin-bottom:0px;
+                  margin-top:0px; } 
             p { 
                   font-color: #202C39;
                   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
@@ -44,7 +52,44 @@
                   font-variant: normal; 
                   font-weight: 400; 
                   line-height: 1.15; 
+                  text-indent: 2em;
+
             } 
+            p2 { 
+                  font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 14px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15;
+
+            } 
+            sub {
+                 font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 10px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400;  
+            }
+            sup {
+                 font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 8px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400;  
+            }
+            footnote {
+                 font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 11px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15; 
+            }
             blockquote { 
                   font-color: #202C39;
                   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
@@ -73,8 +118,10 @@
       table {
            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
            border-collapse: collapse;
-           width: 565px;
+           width: 100%;
            padding-left: 0.5em;
+           margin: 0em;
+           font-size: 12px;
            }
       td, th {
         border: 1px solid #B8B08D;
@@ -115,10 +162,14 @@
 
       .scoot {
       		padding-left: 5em;
+      		padding-right: 5em;
 	      	padding-top: 10em;
+
       }
       .scoot1 {
-      		padding-left: 5em;
+      		padding-left: 2em;
+      		padding-right: 4em;
+                
       }
 
       .menu {
@@ -157,6 +208,21 @@
         font-size: 18px;
         line-height: 1.1;
       }
+      .res{
+      	border: 1px solid #B8B08D;
+        width: 85%;
+        padding: 0.5em;
+        padding-right:5em;
+        padding-left:0em;
+        padding-bottom:1em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        background-color: #F2F0E6;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #202C39;
+        font-weight:14px;
+        line-height: 1.15;
+      }   
       ul.a{
   			list-style-type: square;
             list-style-position: outside;
@@ -169,20 +235,107 @@
         }
      li{
      	padding-bottom: 0.5em;
+        font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 14px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15; 
      }
-
       </style>
+
    </head>
 
    <body>
 
       <div class="scoot">
-	      <h1> <span style="font-style: italic">projects</span></h1>
-      </div>
+	      <h1> <span style="font-style: italic">three-stage op-amp</span></h1>
+               
+              <p2>This was the final project for EE105, Microelectronic Devices and Circuits, at UC Berkeley in Spring 2018.  </p2>
 
 
+      <div class="res">   
+              <p>
+              <span style="font-weight: bold; font-size:22px;">Schematic</span>
+                <p> schematic here  
 
+              
+                </p>
 
+           
 
+</div>
+      <a name="adc"></a>
+
+      <h2> <span style="font-style: italic">qualitative description</span></h2>
+
+      <p>Throughout this amplifier, we alternate PNP and NPN stages to maintain headroom without using an explicit,
+”battery-based” level shifter, i.e, a resistor in series with a current source in the signal path, which would decrease
+common-mode range.</p>
+            
+            <h3>input stage</h3>
+            <p> The input stage of this op-amp is a PNP differential pair (Q1, Q2) with Darlington inputs and current mirror
+load (Q4, Q5, R1, R2). The tail current is set by the base-emitter referenced current source comprising Q6, Q7,
+R1, and R2. Because the output current is set by the voltage drop over R2, which is set by Q6 to be Veb,6, the
+current is determined overwhelmingly by Veb,6, which is highly stable with respect to iC (varies exponentially
+with iC ). Additionally, this stability is enhanced by by Q7, which, by the same principle, protects the current
+from variation in the opposite supply. It also increases the mirror’s output impedance and provides feedback,
+protecting against mismatch variation.</p>
+<p>The PNP Darlington inputs decrease the input current draw by a factor of β, functioning as a single transistor
+with an effective β of approximately β
+2
+P NP , though we do sacrifice some headroom, since the |Vbe| must be twice
+that of a single transistor in order for both transistors to be on. The introduction of the Darlington inputs
+allowed the op-amp to have input bias currents well under 100nA per input.</p>
+<p>The basic NPN current mirror load on the input stage mirrors the current from the noninverting input to the
+output of the first stage, performing differential to single-ended conversion without sacrificing half the differential
+gain.</p>
+<p>The first stage is built with PNP active transistors due to the common-mode range of -2V to 1V. The current
+source for this stage was placed at the top rail to take advantage of the 2V headroom (from 3V to 1V), leading
+to the choice of PNP for the gain elements and NPN for the current mirror load.
+            </p>
+               
+            <h3>gain stage</h3>
+            <p> The gain stage of this amplifier is a basic NPN common-emitter (Q3) with an active base-emitter referenced
+current source (Q8, Q9, R4, R3) load, which, as discussed previously, has a high output impedance and therefore
+allows the gain of this stage to be high The common-emitter stage provides high gain:</p>
+
+<p> \[ Av,S2 = −gm,3(Ro,CM||Rin,S3) \],</p>
+
+<p>with Ro,CM indicating the current mirror’s output impedance and Rin,S3 indicating the input impedance of the
+output stage. however, since the gain is inverting, the Miller effect applies to the parasitic capacitance Cbc,3,
+which sees Rπ,3||Ro,2||Ro,5, forming a high-impedance node and limiting bandwidth.
+   
+            </p>
+
+            <h3>output stage</h3>
+            <p> The output stage is a Class AB output stage with partial output short protection provided by Q15: when
+the current through R15 is sufficient to cause a Vbe voltage drop across R8, Q15 turns on, robbing Q16 of its
+base current and thereby limiting total output current to Vbe
+R8</p>
+
+<p>Q13, Q14, and R7 work to maintain a voltage drop of 2Vbe while decreasing the quiescent current through
+Q16 and Q17. By setting IC,14 < IC,13, which can be done by setting IC,14 =
+Vbe,13
+R7 < IC,13, the quiescent current
+through Q16 and Q17 can be decreased significantly.Though this amplifier does not do that, only 14.4μA run
+through Q16 and Q17. Because Q14 and Q13 are hooked up in feedback, this biasing technique is still useful: it
+provides a stable voltage drop of approximately 2Vbe.
+   
+            </p>
+      <div class="res">   
+              <p>
+              <span style="font-weight: bold; font-size:22px;">Specifications</span>
+                <p> specs here  
+
+              
+                </p>
+
+           
+
+</div>
+ 
+</div>
 
    </body>
