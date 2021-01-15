@@ -27,15 +27,19 @@
                   font-style: normal; 
                   font-variant: normal; 
                   font-weight: bold; 
-                  line-height: 0.9; } 
+                  line-height: 0.9; 
+                  margin-bottom:0px;
+} 
             h3 { 
                   font-color: #202C39;
                   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
-                  font-size: 20px; 
-                  font-style: normal; 
+                  font-size: 18px; 
+                  font-style: italic; 
                   font-variant: normal; 
                   font-weight: bold; 
-                  line-height: 0.9; } 
+                  line-height: 0.9;
+                  margin-bottom:0px;
+                  margin-top:0px; } 
             p { 
                   font-color: #202C39;
                   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
@@ -44,7 +48,46 @@
                   font-variant: normal; 
                   font-weight: 400; 
                   line-height: 1.15; 
+                  
+
             } 
+            p2 { 
+                  font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 12px; 
+                  font-style: italic; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15; 
+                 
+
+
+            } 
+            sub {
+                 font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 10px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400;  
+            }
+            sup {
+                 font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 8px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400;  
+            }
+            footnote {
+                 font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 11px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15; 
+            }
             blockquote { 
                   font-color: #202C39;
                   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
@@ -73,8 +116,10 @@
       table {
            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
            border-collapse: collapse;
-           width: 565px;
+           width: 100%;
            padding-left: 0.5em;
+           margin: 0em;
+           font-size: 12px;
            }
       td, th {
         border: 1px solid #B8B08D;
@@ -118,7 +163,9 @@
 	      	padding-top: 10em;
       }
       .scoot1 {
-      		padding-left: 5em;
+      		padding-left: 2em;
+      		padding-right: 4em;
+                
       }
 
       .menu {
@@ -157,6 +204,21 @@
         font-size: 18px;
         line-height: 1.1;
       }
+      .res{
+      	border: 1px solid #B8B08D;
+        width: 85%;
+        padding: 0.5em;
+        padding-right:2em;
+        padding-left:1.75em;
+        padding-bottom:1em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        background-color: #F2F0E6;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #202C39;
+        font-weight:14px;
+        line-height: 1.15;
+      }   
       ul.a{
   			list-style-type: square;
             list-style-position: outside;
@@ -169,20 +231,141 @@
         }
      li{
      	padding-bottom: 0.5em;
+        font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 14px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15; 
      }
-
       </style>
    </head>
 
    <body>
 
       <div class="scoot">
-	      <h1> <span style="font-style: italic">projects</span></h1>
-      </div>
+	      <h1> <span style="font-style: italic">IoT SoC</span></h1>
+               
+              <p>This was the final project for EE140/240A, Linear Integrated Circuits, at UC Berkeley in Spring 2020.  </p>
+      <div class="res">   
+              <p>
+              <span style="font-weight: bold; font-size:22px;">Problem Overview</span>
+                <p> For a hypothetical mixed-signal chip which includes a microprocessor, flash and RAM memory, and several analog outputs and inputs, work as a group of three to design all of the analog components of this chip:  </p>
 
+              <ul>
+                <li><a href="#adc" class="a">8-bit successive-approximation analog-to-digital converter </a> (SAR ADC)
+                <li><a href="#pga" class="a">Programmable-gain switched-capacitor amplifier </a> (PGA) 
+                <li><a href="#ref" class="a">Bandgap voltage reference and temperature sensor </a> (BGT) 
+                <li><a href="#mux" class="a">Analog multiplexer </a> (MUX) 
+                <li><a href="#vreg" class="a">Analog and digital voltage regulators </a>(AREG,DREG)
+              </ul>
+            <p>The chip will be battery-powered, so the circuits need to operate properly from 3.2V down to 1.6V or less.<sup>1</sup> It should meet all specifications over the industrial temperature range (-40 to +85 °C). </p>
 
+img here
+<p>All of the circuit blocks share a common ground. Only the microprocessor runs off of V<sub>DDD</sub>, and all other blocks run off of either V<sub>DDA</sub> or V<sub>BAT</sub>. V<sub>DDD</sub> should be nominally 1.5V, and you may choose V<sub>DDA</sub>.  </p>
 
+<hr>
+<sup>1</sup><footnote>Assume each battery has a series resistance of 1Ω, or 2Ω total.</footnote>
+</div>
+      <a name="adc"></a>
 
+      <h2> <span style="font-style: italic">SAR ADC</span></h2>
 
+      <p>Discuss design here</p>
+            <div class="scoot1">
+            <h3>schematic</h3>
+            <p> schematic here
+            </p>
+               <div class="res">
+               <p>
+               <span style="font-weight: bold; font-size:14px; margin-top:2em;">Results</span>
+               </p>
+               </div>
+
+            </div>
+            <p> Discuss results here
+   
+            </p>
+
+      <a name="pga"></a>
+
+      <h2> <span style="font-style: italic">programmable-gain amplifier</span></h2>
+      <p>Discuss design here</p>
+            <div class="scoot1">
+            <h3>schematic</h3>
+            <p> schematic here
+            </p>
+               <div class="res">
+               <p>
+               <span style="font-weight: bold; font-size:14px; margin-top:2em;">Results</span>
+               </p>
+               </div>
+
+            </div>
+            <p> Discuss results here
+   
+            </p>
+
+      <a name="ref"></a>
+      <h2> <span style="font-style: italic">bandgap voltage reference</span></h2>
+      <p>Discuss design here</p>
+            <div class="scoot1">
+            <h3>schematic</h3>
+            <p> schematic here
+            </p>
+               <div class="res">
+               <p>
+               <span style="font-weight: bold; font-size:14px; margin-top:2em;">Results</span>
+               </p>
+               </div>
+
+            </div>
+            <p> Discuss results here
+   
+            </p>
+
+      <a name="mux"></a>
+      <h2> <span style="font-style: italic">analog mux</span></h2>
+      <p>Discuss design here</p>
+            <div class="scoot1">
+            <h3>schematic</h3>
+            <p> schematic here
+            </p>
+               <div class="res">
+               <p>
+               <span style="font-weight: bold; font-size:14px; margin-top:2em;">Results</span>
+               </p>
+               </div>
+
+            </div>
+            <p> Discuss results here
+   
+            </p>      
+
+      <a name="vreg"></a>
+      <h2> <span style="font-style: italic">voltage regulators</span></h2>
+      <p>Discuss design here</p>
+            <div class="scoot1">
+            <h3>schematic</h3>
+            <p> schematic here
+            </p>
+               <div class="res">
+               <p>
+               <span style="font-weight: bold; font-size:14px; margin-top:2em;">Results</span>
+               </p>
+               </div>
+
+            </div>
+            <p> Discuss results here
+   
+            </p>
+
+            <div class="res">   
+              <p>
+              <span style="font-weight: bold; font-size:22px;">Overall Results</span>
+
+            </div>
+</div>
 
    </body>
