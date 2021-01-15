@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" href="imgs/favicon.ico">
+      <style>
+         body {
+            background-color: #FFFFFF;
+            padding: 1em;
+
+            margin-left: 1em;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-style: normal;
+         }
+        h1 { 
+               font-color: #202C39;
+               font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+               font-size: 48px; 
+               font-style: normal; 
+               font-variant: normal; 
+               font-weight: 700; 
+               line-height: 0.9; 
+               } 
+            h2 { 
+                  font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 24px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: bold; 
+                  line-height: 0.9; } 
+            h3 { 
+                  font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 20px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: bold; 
+                  line-height: 0.9; } 
+            p { 
+                  font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 14px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15; 
+            } 
+            blockquote { 
+                  font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 21px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 30px; 
+            } 
+            pre { 
+                  font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 13px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 18.5714px; 
+            }
+      hr { 
+            display: block;
+            background-color: #283845;
+            border: none;
+            height:1px;
+            }
+
+      table {
+           font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+           border-collapse: collapse;
+           width: 565px;
+           padding-left: 0.5em;
+           }
+      td, th {
+        border: 1px solid #B8B08D;
+        text-align: center;
+        padding: 8px;
+        background-color: #F2F0E6;
+      }
+      img {
+        border-radius: 50%;
+       }
+
+      a.a:link {
+      		text-decoration: none;
+            color: #202C39;
+      }
+
+      a.a:visited {
+      		text-decoration: none;
+            color: #202C39;
+      }
+      a.a:hover {
+      		text-decoration: none;
+            color: #D5A021;
+      }
+
+      a.b:link {
+		text-decoration: underline;
+        color: #F2F0E6;
+      }
+      a.b:visited {
+      		text-decoration: none;
+            color: #F2F0E6;
+      }
+      a.b:hover {
+      		text-decoration: none;
+            color: #D5A021;
+      }
+
+      .scoot {
+      		padding-left: 5em;
+	      	padding-top: 10em;
+      }
+      .scoot1 {
+      		padding-left: 5em;
+      }
+
+      .menu {
+      		padding-left: 3.25em;
+      		word-spacing: 1em;
+            font-color: #202C39;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+            font-size: 24px; 
+            font-style: italic; 
+            font-variant: normal; 
+            font-weight: 700; 
+            line-height: 0.9;
+      }
+
+      .announce-head {
+      	border: 0;
+        width: 550px;
+        padding: 0.5em;
+        background-color: #283845;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #F2F0E6;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 0.9;
+      }
+      .announce{
+      	border: 0;
+        width: 550px;
+        padding: 0.5em;
+        margin-top: -1em;
+        margin-bottom: 1em;
+        background-color: #283845;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #F2F0E6;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 1.1;
+      }
+      ul.a{
+  			list-style-type: square;
+            list-style-position: outside;
+            color: #202C39;  
+		}
+        ul.b{
+          list-style-type: square;
+          list-style-position: outside;
+          color: #F2F0E6;  
+        }
+     li{
+     	padding-bottom: 0.5em;
+     }
+
+      </style>
+   </head>
+
+   <body>
+
+      <div class="scoot">
+	      <h1> <span style="font-style: italic">projects</span></h1>
+      </div>
+
+
+
+
+
+
+   </body>
