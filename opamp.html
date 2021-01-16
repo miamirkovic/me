@@ -392,6 +392,42 @@ provides a stable voltage drop of approximately \(2V_{be}\).
          <span style="font-weight: bold; font-size:14px;">Data</span>
           <p class="aligncenter">  <img src="imgs/opamp/AC_Gain.PNG" alt="gain" style="width:90%; margin-right:1em;"> 
                 </p><p class="caption">The gain response of the op-amp over the -2V to 1V common-mode range.</caption></p>
+		     
+          <p class="aligncenter">  <img src="imgs/opamp/AC_Gain_and_Phase.PNG" alt="gain" style="width:90%; margin-right:1em;"> 
+                </p><p class="caption">The open-loop AC gain and phase response of the op-amp with a 0V common-mode input, showing that the
+gain needs to be decreased by 40dB to attain marginal stability.</caption></p>
+		  
+          <p class="aligncenter">  <img src="imgs/opamp/Offset_Voltage.PNG" alt="gain" style="width:90%; margin-right:1em;"> 
+                </p><p class="caption">A DC sweep of the noninverting input with the inverting input grounded, showing the offset voltage of the
+op-amp to be -236μV.</caption></p>
+		     
+          <p class="aligncenter">  <img src="imgs/opamp/Input_Impedance.PNG" alt="gain" style="width:90%; margin-right:1em;"> 
+                </p><p class="caption">{A plot of the op-amp's input impedance, from DC to the unity-gain frequency and beyond.</caption></p>
+		  
+          <p class="aligncenter">  <img src="imgs/opamp/Output_Impedance.PNG" alt="gain" style="width:90%; margin-right:1em;"> 
+                </p><p class="caption">A plot of the op-amp's output impedance, from DC to the unity-gain frequency and beyond.</caption></p>
+		     
+          <p class="aligncenter">  <img src="imgs/opamp/1V_Step_Transient.PNG" alt="gain" style="width:90%; margin-right:1em;"> 
+                </p><p class="caption">A transient simulation of a 1V step with no rise time input applied to the op-amp in unity-gain configuration, showing instability.</caption></p>
+		  
+          <p class="aligncenter">  <img src="imgs/opamp/1V_Step_2_2_Feedback_Overshoot.PNG" alt="gain" style="width:90%; margin-right:1em;"> 
+                </p><p class="caption">A transient simulation of a 1V step with no rise time input applied to the op-amp in feedback configuration with a gain of 2.2, showing a 2.5% overshoot and a phase margin around 68°, if you ignore the apparent bandwidth limiting</caption></p>
+	      
+          <p class="aligncenter">  <img src="imgs/opamp/100uV_Step_Ringing.PNG" alt="gain" style="width:90%; margin-right:1em;"> 
+                </p><p class="caption">A transient simulation of a 100µV step with 10ns rise time input applied to the op-amp in unity-gain configuration, showing an overshoot of 20.5\% and a phase margin of approximately 48°. Included to show a non-bandwidth-limited step-response.</caption></p>
+	
+          <p class="aligncenter">  <img src="imgs/opamp/500mV_Step_Minus1_Feedback_Transient.PNG" alt="gain" style="width:90%; margin-right:1em;"> 
+                </p><p class="caption">A transient simulation of a 500mV step input applied to the op-amp with a gain of -1 in feedback, showing instability.</caption></p>
+
+          <p class="aligncenter">  <img src="imgs/opamp/500mV_Step_Minus2_Feedback_Transient.PNG" alt="gain" style="width:90%; margin-right:1em;"> 
+                </p><p class="caption">A transient simulation of a 500mV step input applied to the op-amp with a gain of -2 in feedback, showing instability.</caption></p>
+
+         <span style="font-weight: bold; font-size:14px;">Data</span>
+          <p class="aligncenter">  <img src="imgs/opamp/500mV_Step_Minus10_Feedback_Transient" alt="gain" style="width:90%; margin-right:1em;"> 
+                </p><p class="caption">A transient simulation of a 500mV step input applied to the op-amp with a gain of -10 in feedback, showing stability on both ends.</caption></p>
+
+          <p class="aligncenter">  <img src="imgs/opamp/500mV_Step_Minus10_Feedback_Slew_Rate.PNG" alt="gain" style="width:90%; margin-right:1em;"> 
+                </p><p class="caption">The same transient simulation of a 500mV step input applied to the op-amp with a gain of -10 in feedback, showing a slew rate of 354.0 V/µs.</caption></p>
 
 </div>
  
