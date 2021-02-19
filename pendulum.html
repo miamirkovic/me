@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="icon" href="imgs/favicon.ico">
+  <script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link rel="icon" href="imgs/favicon.ico">
       <style>
          body {
             background-color: #FFFFFF;
@@ -27,15 +30,19 @@
                   font-style: normal; 
                   font-variant: normal; 
                   font-weight: bold; 
-                  line-height: 0.9; } 
+                  line-height: 0.9; 
+                  margin-bottom:0px;
+} 
             h3 { 
                   font-color: #202C39;
                   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
-                  font-size: 20px; 
-                  font-style: normal; 
+                  font-size: 18px; 
+                  font-style: italic; 
                   font-variant: normal; 
                   font-weight: bold; 
-                  line-height: 0.9; } 
+                  line-height: 0.9;
+                  margin-bottom:0px;
+                  margin-top:0px; } 
             p { 
                   font-color: #202C39;
                   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
@@ -44,7 +51,46 @@
                   font-variant: normal; 
                   font-weight: 400; 
                   line-height: 1.15; 
+                  
+
             } 
+            p2 { 
+                  font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 12px; 
+                  font-style: italic; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15; 
+                 
+
+
+            } 
+            sub {
+                 font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 10px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400;  
+            }
+            sup {
+                 font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 8px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400;  
+            }
+            footnote {
+                 font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 11px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15; 
+            }
             blockquote { 
                   font-color: #202C39;
                   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
@@ -70,11 +116,14 @@
             height:1px;
             }
 
+
       table {
            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
            border-collapse: collapse;
-           width: 565px;
+           width: 100%;
            padding-left: 0.5em;
+           margin: 0em;
+           font-size: 12px;
            }
       td, th {
         border: 1px solid #B8B08D;
@@ -83,47 +132,70 @@
         background-color: #F2F0E6;
       }
       img {
-        border-radius: 50%;
+        
        }
 
+      .cell {
+        display: grid;
+        width: max-content;
+        justify-content: space-between;
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 1fr;
+        
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><line x1='0' y1='0' x2='100' y2='100' stroke='#B8B08D' vector-effect='non-scaling-stroke'/></svg>");
+        background-size: 100% 100%;
+        
+      }
+
+      .cell--topRight {
+        grid-column-start: 2;
+        text-align: right;
+      }
+
+      .cell--bottomLeft {
+        grid-column-start: 1;
+      }
+
       a.a:link {
-      		text-decoration: none;
+          text-decoration: none;
             color: #202C39;
       }
 
       a.a:visited {
-      		text-decoration: none;
+          text-decoration: none;
             color: #202C39;
       }
       a.a:hover {
-      		text-decoration: none;
+          text-decoration: none;
             color: #D5A021;
       }
 
       a.b:link {
-		text-decoration: underline;
+    text-decoration: underline;
         color: #F2F0E6;
       }
       a.b:visited {
-      		text-decoration: none;
+          text-decoration: none;
             color: #F2F0E6;
       }
       a.b:hover {
-      		text-decoration: none;
+          text-decoration: none;
             color: #D5A021;
       }
 
       .scoot {
-      		padding-left: 5em;
-	      	padding-top: 10em;
+          padding-left: 5em;
+          padding-top: 10em;
       }
       .scoot1 {
-      		padding-left: 5em;
+          padding-left: 2em;
+          padding-right: 4em;
+                
       }
 
       .menu {
-      		padding-left: 3.25em;
-      		word-spacing: 1em;
+          padding-left: 3.25em;
+          word-spacing: 1em;
             font-color: #202C39;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
             font-size: 24px; 
@@ -134,7 +206,7 @@
       }
 
       .announce-head {
-      	border: 0;
+        border: 0;
         width: 550px;
         padding: 0.5em;
         background-color: #283845;
@@ -145,7 +217,7 @@
         line-height: 0.9;
       }
       .announce{
-      	border: 0;
+        border: 0;
         width: 550px;
         padding: 0.5em;
         margin-top: -1em;
@@ -157,27 +229,103 @@
         font-size: 18px;
         line-height: 1.1;
       }
+      .res{
+        border: 1px solid #B8B08D;
+        width: 85%;
+        padding: 0.5em;
+        padding-right:2em;
+        padding-left:1.75em;
+        padding-bottom:1em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        background-color: #F2F0E6;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #202C39;
+        font-weight:14px;
+        line-height: 1.15;
+      }   
       ul.a{
-  			list-style-type: square;
+        list-style-type: square;
             list-style-position: outside;
             color: #202C39;  
-		}
+    }
         ul.b{
           list-style-type: square;
           list-style-position: outside;
           color: #F2F0E6;  
         }
      li{
-     	padding-bottom: 0.5em;
+      padding-bottom: 0.5em;
+        font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 14px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15; 
      }
-
       </style>
    </head>
 
    <body>
 
       <div class="scoot">
-	      <h1> <span style="font-style: italic">projects</span></h1>
+	      <h1> <span style="font-style: italic">self-erecting inverted pendulum</span></h1>
+
+         <p>This was the final project for EE128, Feedback Control, at UC Berkeley in Fall 2018.  </p>
+         <div class="res">   
+              <p>
+              <span style="font-weight: bold; font-size:22px;">Contents</span>
+
+              <ul>
+                <li><a href="#ov" class="a">Overview </a> 
+                <li><a href="#ppc" class="a">Pole Placement Controller Design </a>
+                <li><a href="#lod" class="a">Luenberger Observer Design </a> 
+                <li><a href="#lqr" class="a">LQR Controller Design </a>  
+                <li><a href="#int" class="a">Swing-Up Controller Design and Integration </a>
+              </ul>
+            
+            </div>
+
+        <a name="ov"></a>
+        <h2> <span style="font-style: italic">overview</span></h2>
+
+          <p>
+          </p>
+
+          <p>
+          The objective of this project is to achieve simultaneous countrol of both the angular position of the pendulum and horizontal position of the cart on the track using full-state feedback. We will be considering small angle perturbations and sine wave reference tracking of the cart position. Note that the system is a SIMO – Single Input Multiple Output – system, since we are trying to control both the position of the cart and the angle of the pendulum by using only the motor voltage. 
+          </p>
+
+
+          <p>
+          The final system comprises two different controllers: a swing-up controller (nonlinear) to swing the pendulum up to a vertical position from its initial dangling position and a stabilizing controller (linear) to maintain the pendulum in the vertical position. For the stabilizing controller, we will explore two different controller design techniques: traditional pole-placement controller design and LQR controller design. We use an "energy-pumping" method for the swing-up controller. 
+          </p>
+
+
+        <a name="ppc"></a>
+        <h2> <span style="font-style: italic">pole-placement controller design</span></h2>
+
+
+
+        <a name="lod"></a>
+        <h2> <span style="font-style: italic">luenberger observer design</span></h2>
+
+
+
+        <a name="lqr"></a>
+        <h2> <span style="font-style: italic">LQR controller design</span></h2>
+
+
+
+        <a name="int"></a>
+        <h2> <span style="font-style: italic">integration</span></h2>
+
+
+
+
+
+
       </div>
 
 

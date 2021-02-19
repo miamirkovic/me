@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
 	<link rel="icon" href="imgs/favicon.ico">
       <style>
          body {
@@ -113,6 +116,7 @@
             height:1px;
             }
 
+
       table {
            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
            border-collapse: collapse;
@@ -128,8 +132,29 @@
         background-color: #F2F0E6;
       }
       img {
-        border-radius: 50%;
+        
        }
+
+      .cell {
+        display: grid;
+        width: max-content;
+        justify-content: space-between;
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 1fr;
+        
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><line x1='0' y1='0' x2='100' y2='100' stroke='#B8B08D' vector-effect='non-scaling-stroke'/></svg>");
+        background-size: 100% 100%;
+        
+      }
+
+      .cell--topRight {
+        grid-column-start: 2;
+        text-align: right;
+      }
+
+      .cell--bottomLeft {
+        grid-column-start: 1;
+      }
 
       a.a:link {
       		text-decoration: none;
@@ -275,12 +300,82 @@ img here
       <p>Discuss design here</p>
             <div class="scoot1">
             <h3>schematic</h3>
-            <p> schematic here
-            </p>
+            <p class="aligncenter">  <img src="SoC_files/ADC_EE140.png" alt="schematic" style="width:92.5%;">
+                </p>
+            <p class="aligncenter">  <img src="SoC_files/SA_LATCH_EE140.png" alt="schematic" style="width:92.5%;">
                <div class="res">
                <p>
                <span style="font-weight: bold; font-size:14px; margin-top:2em;">Results</span>
                </p>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Cap DAC: Isolated Performance Error [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">Bit</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>0</th>
+                     <td>0.113</td> 
+                     <td>0.119</td>
+                     <td>0.130</td>
+                  </tr>
+                  <tr>
+                     <th>1</th>
+                     <td>0.113</td> 
+                     <td>0.117</td>
+                     <td>0.140</td>
+                  </tr>
+                  <tr>
+                     <th>2</th>
+                     <td>0.112</td> 
+                     <td>0.117</td>
+                     <td>0.131</td>
+                  </tr>
+                  <tr>
+                     <th>3</th>
+                     <td>0.110</td> 
+                     <td>0.116</td>
+                     <td>0.128</td>
+                  </tr>
+                  <tr>
+                     <th>4</th>
+                     <td>0.108</td> 
+                     <td>0.111</td>
+                     <td>0.124</td>
+                  </tr>
+                  <tr>
+                     <th>5</th>
+                     <td>0.102</td> 
+                     <td>0.105</td>
+                     <td>0.113</td>
+                  </tr>
+                  <tr>
+                     <th>6</th>
+                     <td>0.090</td> 
+                     <td>0.095</td>
+                     <td>0.998</td>
+                  </tr>
+                  <tr>
+                     <th>7</th>
+                     <td>0.071</td> 
+                     <td>0.146</td>
+                     <td>0.399</td>
+                  </tr>
+                 
+               </table>
+
                </div>
 
             </div>
@@ -294,12 +389,89 @@ img here
       <p>Discuss design here</p>
             <div class="scoot1">
             <h3>schematic</h3>
-            <p> schematic here
-            </p>
+            <p class="aligncenter">  <img src="SoC_files/PGA_EE140.png" alt="schematic" style="width:92.5%;">
+                </p>
+            <p class="aligncenter">  <img src="SoC_files/PGA_AMP_EE140.png" alt="schematic" style="width:92.5%;">
+                </p>
+
                <div class="res">
                <p>
                <span style="font-weight: bold; font-size:14px; margin-top:2em;">Results</span>
                </p>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> PGA: Isolated Performance Average Error [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">Gain [V/V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1</th>
+                     <td>4.5</td> 
+                     <td>4.89</td>
+                     <td>9.34</td>
+                  </tr>
+                  <tr>
+                     <th>2</th>
+                     <td>3.11</td> 
+                     <td>2.55</td>
+                     <td>4.76</td>
+                  </tr>
+                  <tr>
+                     <th>3</th>
+                     <td>2.24</td> 
+                     <td>1.64</td>
+                     <td>4.1</td>
+                  </tr>
+                  <tr>
+                     <th>4</th>
+                     <td>2.59</td> 
+                     <td>2.01</td>
+                     <td>4.05</td>
+                  </tr>
+                  <tr>
+                     <th>5</th>
+                     <td>1.3</td> 
+                     <td>0.96</td>
+                     <td>3.55</td>
+                  </tr>
+                  <tr>
+                     <th>6</th>
+                     <td>1.78</td> 
+                     <td>1.48</td>
+                     <td>4.05</td>
+                  </tr>
+                  <tr>
+                     <th>7</th>
+                     <td>0.83</td> 
+                     <td>0.46</td>
+                     <td>3.26</td>
+                  </tr>
+                  <tr>
+                     <th>8</th>
+                     <td>2.27</td> 
+                     <td>1.90</td>
+                     <td>4.68</td>
+                  </tr>
+                  <tr>
+                     <th>Mean</th>
+                     <th>2.33</th> 
+                     <th>1.99</th>
+                     <th>4.72</th>
+                  </tr>
+               </table>
+
                </div>
 
             </div>
@@ -312,12 +484,111 @@ img here
       <p>Discuss design here</p>
             <div class="scoot1">
             <h3>schematic</h3>
-            <p> schematic here
+            <p class="aligncenter">  <img src="SoC_files/BGR_PTAT_EE140.png" alt="schematic" style="width:92.5%;"> 
+            </p>
+            <p class="aligncenter">  <img src="SoC_files/PGA_AMP_EE140.png" alt="schematic" style="width:92.5%;">
             </p>
                <div class="res">
                <p>
                <span style="font-weight: bold; font-size:14px; margin-top:2em;">Results</span>
                </p>
+
+               <p class="aligncenter">  <img src="SoC_files/ee140-bg-var.png" alt="schematic" style="width:100%;">
+               </p>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> \(V_{BG}\)  Variation (% Error) </th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>0.7</td> 
+                     <td>1</td>
+                     <td>1.12</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>0.5</td> 
+                     <td>0.4</td>
+                     <td>0.6</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>0.7</td> 
+                     <td>0.5</td>
+                     <td>1.2</td>
+                  </tr>
+               </table>
+
+                <br>
+
+                <table>
+                  <tr>
+                    <th colspan=3> Bandgap Transients</th>
+                  </tr>
+                  <tr>
+                     <td>-40\(^{\circ}\)C</td> 
+                     <td>27\(^{\circ}\)C</td> 
+                     <td>85\(^{\circ}\)C</td> 
+                  </tr>
+                  <tr>
+                     <th><img src="SoC_files/bg-tran--40-ee140.png" alt="schematic" style="width:100%;"></th> 
+                     <th><img src="SoC_files/bg-tran-27-ee140.png" alt="schematic" style="width:100%;"></th>
+                     <th><img src="SoC_files/bg-tran-85-ee140.png" alt="schematic" style="width:100%;"></th>
+                  </tr>
+               </table>
+                
+               <br>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Bandgap Startup Time (\(\mu s\)) </th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>0.4</td> 
+                     <td>0.4</td>
+                     <td>0.52</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>0.3</td> 
+                     <td>0.6</td>
+                     <td>0.5</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>2.3</td> 
+                     <td>0.6</td>
+                     <td>0.52</td>
+                  </tr>
+               </table>
                </div>
 
             </div>
@@ -330,12 +601,38 @@ img here
       <p>Discuss design here</p>
             <div class="scoot1">
             <h3>schematic</h3>
-            <p> schematic here
-            </p>
+            <p class="aligncenter">  <img src="SoC_files/MUX_EE140.png" alt="schematic" style="width:92.5%;">
+                </p>
                <div class="res">
                <p>
                <span style="font-weight: bold; font-size:14px; margin-top:2em;">Results</span>
                </p>
+
+               <table>
+                  <tr>
+                    <th colspan=2> \(R_{on}\) vs. \(V_{in}\)</th>
+                  </tr>
+                  <tr>
+                     <th>Temperature \(^{\circ}\)C</th> 
+                     <th>Max \(R_{on}\) vs. \(V_{in}\)</th> 
+                  </tr>
+                  <tr>
+                     <th>-40\(^{\circ}\)C</th> 
+                     <td>4136.7 \(\Omega\)/V</td>     
+                  </tr>
+                  <tr>
+                     <th>27\(^{\circ}\)C</th> 
+                     <td>5330 \(\Omega\)/V</td>  
+                  </tr>
+                  <tr>
+                     <th>80\(^{\circ}\)C</th> 
+                     <td>6313.3 \(\Omega\)/V</td>  
+                  </tr>
+                  
+               </table>
+                
+               
+
                </div>
 
             </div>
@@ -348,12 +645,167 @@ img here
       <p>Discuss design here</p>
             <div class="scoot1">
             <h3>schematic</h3>
-            <p> schematic here
-            </p>
+            <p class="aligncenter">  <img src="SoC_files/VREG_EE140.png" alt="schematic" style="width:92.5%;"> 
+                </p>
+            <p class="aligncenter">  <img src="SoC_files/REG_AMP_EE140.png" alt="schematic" style="width:92.5%;">
+                </p>
+
                <div class="res">
                <p>
                <span style="font-weight: bold; font-size:14px; margin-top:2em;">Results</span>
                </p>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> \(V_{DDA}\)  Variation (% Error) </th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>0.8</td> 
+                     <td>0.8</td>
+                     <td>7</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>0.6</td> 
+                     <td>3.5</td>
+                     <td>6</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>0.7</td> 
+                     <td>1.2</td>
+                     <td>7</td>
+                  </tr>
+               </table>
+
+                <br>
+
+                <table>
+                  <tr>
+                    <th colspan=3> AREG Transients</th>
+                  </tr>
+                  <tr>
+                     <td>-40\(^{\circ}\)C</td> 
+                     <td>27\(^{\circ}\)C</td> 
+                     <td>85\(^{\circ}\)C</td> 
+                  </tr>
+                  <tr>
+                     <th><img src="SoC_files/areg-tran--40-ee140.png" alt="schematic" style="width:100%;"></th> 
+                     <th><img src="SoC_files/areg-tran-27-ee140.png" alt="schematic" style="width:100%;"></th>
+                     <th><img src="SoC_files/areg-tran-27-ee140.png" alt="schematic" style="width:100%;"></th>
+                  </tr>
+               </table>                
+
+               <br> 
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> \(V_{DDD}\)  Variation (% Error) </th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>230</td> 
+                     <td>230</td>
+                     <td>230</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>3.3</td> 
+                     <td>4.6</td>
+                     <td>4.6</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>1.3</td> 
+                     <td>6</td>
+                     <td>34.6</td>
+                  </tr>
+               </table>
+
+                <br>
+
+                <table>
+                  <tr>
+                    <th colspan=3> DREG Transients</th>
+                  </tr>
+                  <tr>
+                     <td>-40\(^{\circ}\)C</td> 
+                     <td>27\(^{\circ}\)C</td> 
+                     <td>85\(^{\circ}\)C</td> 
+                  </tr>
+                  <tr>
+                     <th><img src="SoC_files/dreg-tran--40-ee140.png" alt="schematic" style="width:100%;"></th> 
+                     <th><img src="SoC_files/dreg-tran-27-ee140.png" alt="schematic" style="width:100%;"></th>
+                     <th><img src="SoC_files/dreg-tran-27-ee140.png" alt="schematic" style="width:100%;"></th>
+                  </tr>
+               </table>
+                
+               <br>
+
+               <p>
+               <span style="font-weight: bold; font-size:14px; margin-top:2em;">DREG Startup Failure</span>
+               </p>
+               <p>
+                The transient data above was obtained from full-chip integrated simulation. The data demonstrate a DREG startup failure for low \(V_{BAT}\) which was not present in isolated and semi-integrated (with all components except ADC) simulation. 
+                </p>
+
+                <p>
+                This failure was rectified by widening the DREG's output transistor from 124\(\mu\)m to 450 \(\mu\)m, as shown in the plot below, which was obtained from full-chip integrated simulation with \(V_{BAT} = 1.6V\) after widening the output transistor.
+                </p>
+
+                <p class="aligncenter">  <img src="SoC_files/fixed-dreg-ee140.png" alt="schematic" style="width:100%;">
+                  <br>
+                  <span style="font-style: italic; font-size:10px; margin-top:2em;">  The x-axis in the figure is in units of \(\mu\)s. </span>
+                </p>
+              
+                <p>
+                Since running the full-chip integrated simulation for all gains and inputs took days, we were not able to retake all the data in time, so the remainder of the data shown in the overall results section are from the simulations prior to fixing the startup issue. 
+
+               </p>
+
+               <span style="font-weight: bold; font-size:16px;">
+               Power Consumption</span> 
+
+               <br>
+               <p>
+               Maximum power consumption for the bandgap and regulators occurred at a temperature of 27\(^{\circ}\)C with \(V_{BAT} = 2.4V\). 
+               <ul>
+                 <li> Bandgap: 0.6W
+                 <li> AREG: 900 \(\mu\)W
+                 <li> DREG: (max) 0.1W
+               </ul>
+              </p>
+              
+
+
+                
                </div>
 
             </div>
@@ -365,6 +817,514 @@ img here
               <p>
               <span style="font-weight: bold; font-size:22px;">Overall Results</span>
 
+              <br>
+              <br>
+
+              <span style="font-weight: bold; font-size:16px;">Area</span> 
+              <p>
+               Total Area: 1,049,820.896 \(\mu m^2\) (or 1.05 \(mm^2\)) 
+              </p>
+              <p>
+                Notable Contributors:
+              </p>
+              <ul>
+                <li> BGR: 43.9%
+                <li> AREG: 24.1%
+                <li> PGA: 11.5%
+                <li> ADC: 11.0% 
+              </ul>
+              <p>
+              Resistors accounted for 81.1% of the total area. Since the bandgap reference and PTAT sensor used a significant number of resistors, including one with a value of 400K\(\Omega\), it makes sense that the BGR took up such a large portion of the chip area.  
+
+              </p> 
+
+              <span style="font-weight: bold; font-size:16px;">Power</span> 
+              <p>
+               The chip pulled 227 mA with \(V_{BAT}\) at 3.2V, yielding a power consumption of 726 mW.  
+              </p>
+
+              <span style="font-weight: bold; font-size:16px;">Startup Time: 10 \(\mu\)s</span> 
+
+              <br>
+              <br>
+
+              <span style="font-weight: bold; font-size:16px;">Total Cost: $0.13</span> 
+              
+              <br>
+              <br>
+
+              <span style="font-weight: bold; font-size:16px;">Integration Error</span> 
+
+              <br>
+              <br>
+
+              <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Average PGA Error, Gain=1 [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>1.34</td> 
+                     <td>0.518</td>
+                     <td>1.33</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>4.03</td> 
+                     <td>2.52</td>
+                     <td>9.99</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>6.89</td> 
+                     <td>3.18</td>
+                     <td>19.1</td>
+                  </tr>
+               </table>
+
+               <br>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Average ADC Error, Gain=1 [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>--</td> 
+                     <td>--</td>
+                     <td>--</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>4.17</td> 
+                     <td>3.33</td>
+                     <td>11</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>6.17</td> 
+                     <td>3.33</td>
+                     <td>6</td>
+                  </tr>
+               </table>
+
+               <br>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Average PGA Error, Gain=2 [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>--</td> 
+                     <td>--</td>
+                     <td>--</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>3.29</td> 
+                     <td>2.31</td>
+                     <td>3.66</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>5.25</td> 
+                     <td>3.63</td>
+                     <td>7.25</td>
+                  </tr>
+               </table>
+
+               <br>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Average ADC Error, Gain=2 [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>--</td> 
+                     <td>--</td>
+                     <td>--</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>3.98</td> 
+                     <td>3.33</td>
+                     <td>8.5</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>7</td> 
+                     <td>2.5</td>
+                     <td>10.7</td>
+                  </tr>
+               </table>
+               
+               <br>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Average PGA Error, Gain=3 [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>--</td> 
+                     <td>--</td>
+                     <td>--</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>3.91</td> 
+                     <td>1.59</td>
+                     <td>7.69</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>2.51</td> 
+                     <td>1.74</td>
+                     <td>12.8</td>
+                  </tr>
+               </table>
+
+               <br>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Average ADC Error, Gain=3 [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>--</td> 
+                     <td>--</td>
+                     <td>--</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>4</td> 
+                     <td>3.33</td>
+                     <td>10</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>5.33</td> 
+                     <td>3.5</td>
+                     <td>11</td>
+                  </tr>
+               </table>
+               
+               <br>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Average PGA Error, Gain=5 [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>--</td> 
+                     <td>--</td>
+                     <td>--</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>2.10</td> 
+                     <td>2.64</td>
+                     <td>5.75</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>3.97</td> 
+                     <td>3.11</td>
+                     <td>8.21</td>
+                  </tr>
+               </table>
+
+               <br>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Average ADC Error, Gain=5 [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>--</td> 
+                     <td>--</td>
+                     <td>--</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>4.5</td> 
+                     <td>3.83</td>
+                     <td>8</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>7.33</td> 
+                     <td>3.67</td>
+                     <td>10.7</td>
+                  </tr>
+               </table>
+               
+               <br>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Average PGA Error, Gain=7 [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>--</td> 
+                     <td>--</td>
+                     <td>--</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>3.52</td> 
+                     <td>4.37</td>
+                     <td>6.56</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>6.92</td> 
+                     <td>3.55</td>
+                     <td>9.24</td>
+                  </tr>
+               </table>
+
+               <br>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Average ADC Error, Gain=7 [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>--</td> 
+                     <td>--</td>
+                     <td>--</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>2.67</td> 
+                     <td>3.33</td>
+                     <td>7.67</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>6.83</td> 
+                     <td>4</td>
+                     <td>8.67</td>
+                  </tr>
+               </table>
+               
+               <br>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Average PGA Error, Gain=8 [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>--</td> 
+                     <td>--</td>
+                     <td>--</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>3.44</td> 
+                     <td>3.15</td>
+                     <td>4.72</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>6.96</td> 
+                     <td>5.06</td>
+                     <td>4.94</td>
+                  </tr>
+               </table>
+
+               <br>
+
+               <table>
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                    <th colspan=4> Average ADC Error, Gain=8 [LSB]</th>
+                  </tr>
+                  <tr>
+                     <th> <div class="cell diag" >
+                      <div class="cell--topRight">Temp [\(^{\circ}\)C]</div>
+                      <div class="cell--bottomLeft">\(V_{BAT}\) [V]</div>
+                    </div>
+                    </th>
+                     <th>-40</th> 
+                     <th>27</th>
+                     <th>85</th>
+                  </tr>
+                  <tr>
+                     <th>1.6</th>
+                     <td>--</td> 
+                     <td>--</td>
+                     <td>--</td>
+                  </tr>
+                  <tr>
+                     <th>2.4</th>
+                     <td>4.94</td> 
+                     <td>3.00</td>
+                     <td>5.83</td>
+                  </tr>
+                  <tr>
+                     <th>3.2</th>
+                     <td>6.50</td> 
+                     <td>4.50</td>
+                     <td>8.17</td>
+                  </tr>
+               </table>
+               
+               <br>
             </div>
 </div>
 
