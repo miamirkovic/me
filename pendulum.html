@@ -111,7 +111,7 @@
             }
       hr { 
             display: block;
-            background-color: #283845;
+            background-color: #B8B08D;
             border: none;
             height:1px;
             }
@@ -191,6 +191,15 @@
           padding-left: 2em;
           padding-right: 4em;
                 
+      }
+
+      p.aligncenter{
+        text-align:center;
+      }
+
+      .center {
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .menu {
@@ -291,10 +300,13 @@
         <h2> <span style="font-style: italic">overview</span></h2>
 
           <p>
+          VIDEO HERE
           </p>
 
+          
+
           <p>
-          The objective of this project is to achieve simultaneous countrol of both the angular position of the pendulum and horizontal position of the cart on the track using full-state feedback. We will be considering small angle perturbations and sine wave reference tracking of the cart position. Note that the system is a SIMO – Single Input Multiple Output – system, since we are trying to control both the position of the cart and the angle of the pendulum by using only the motor voltage. 
+          The objective of this project is to achieve simultaneous countrol of both the angular position of the pendulum and horizontal position of the cart on the track using full-state feedback. We will be considering small angle perturbations and sine wave reference tracking of the cart position. Note that the system is a SIMO - Single Input Multiple Output - system, since we are trying to control both the position of the cart and the angle of the pendulum by using only the motor voltage. 
           </p>
 
 
@@ -302,19 +314,556 @@
           The final system comprises two different controllers: a swing-up controller (nonlinear) to swing the pendulum up to a vertical position from its initial dangling position and a stabilizing controller (linear) to maintain the pendulum in the vertical position. For the stabilizing controller, we will explore two different controller design techniques: traditional pole-placement controller design and LQR controller design. We use an "energy-pumping" method for the swing-up controller. 
           </p>
 
+          <h3> <span style="font-style: italic">theory</span></h3>
+          <p>
+          The setup consists of a pendulum attached to the movable cart. The free body diagram of this setup is shown in Figure 1. We ignore friction and assume that the mass of the rod is uniformly distributed, e.g. its center of mass is located at the center of the rod, \(L_p = L/2\). N and P are the horizontal and vertical components, respectively, of the reaction force between the cart and the pendulum. The parameter values of the physical system are given in <a href="#params" class="a">Table 1</a>.
+          </p>
+
+          <p class="aligncenter">  <img src="pendulum_imgs/1-pend-fbd.png" alt="pendulum fbd" style="width:92.5%;">
+          </p>
+
+          <h4> <span style="font-style: italic">equations of motion</span></h4>
+
+          <p>
+          To begin, we derive the equations of motion for the system, considering the free-body diagrams of the cart and pendulum separately:
+          </p>
+
+          <p class="aligncenter">  <img src="pendulum_imgs/1-cart-fbd.png" alt="pendulum fbd" style="width:92.5%;">
+          </p>
+
+          <p class="aligncenter">  <img src="pendulum_imgs/1-ppend-fbd.png" alt="pendulum fbd" style="width:92.5%;">
+          </p>
+
+          <p>
+          Under the small-angle approximation, \(\sin \theta \approx \theta\) and \(\cos \theta \approx 1\). In (1), \(F_a\) is the force exerted on the cart by the motor.
+
+          <p>
+          \[(M+m) \ddot{x} + mL_p \ddot{\theta} = F_a \mathrm{~~~~~~~~~~~~~~~~~~~(1)}\] 
+          \[mL_p \ddot{x} + \frac{4mL_p^2}{3}\ddot{\theta} - mgL_p\theta = 0 \mathrm{~~~~~~~~~(2)}\] 
+          </p>
+
+          <p>
+          Solving for (1): 
+          </p>
+
+          <p class="aligncenter"> 
+          \(F_a - N = M\ddot{x}\)
+          <br>
+          \(N=m\ddot{x} + mL_p\ddot{\theta}\)
+          <br>
+          \(N-mL_p\ddot{\theta}\cos \theta = m \ddot{x}\)
+          <br>
+          \(N - mL_p\ddot{\theta} = m\ddot{x}\)
+          </p>
+
+          <p>
+          Solving for (2): 
+          </p>
+
+          <p class="aligncenter"> 
+          With \(I\ddot{\theta}\) as the sum of torques:
+          <br>
+          <br>
+          \(I = \frac{1}{3}m(2L_p)^2\)
+          <br>
+          \(I\ddot{\theta} = M_gL_P \sin \theta - ML_p\ddot{x}\)
+          <br>
+          \(\frac{4}{3}mL_p^2 + ML_p\ddot{x} - M_g L_p \sin \theta = 0\)
+          <br>
+          \(\frac{4}{3} mL_p^2 + ML_p\ddot{x} - M_gL_p \theta = 0\)
+          </p>      
+
+
+          <a name="params"></a>
+             <table>
+                <colgroup>
+                <col span="1" style="width:5em;">
+                </colgroup>
+                <tr>
+                  <th colspan=3> System Parameters</th>
+                </tr>
+                <tr>
+                   <th>Parameter</th> 
+                   <th>Value</th>
+                   <th>Description</th>
+                </tr>
+                <tr>
+                   <td></td> 
+                   <td>439.6 counts/cm</td>
+                   <td>Resolution of cart position encoder</td>
+                </tr>
+                <tr>
+                   <td></td> 
+                   <td>651.9 counts/rad</td>
+                   <td>Resolution of cart angle encoder</td>
+                </tr>
+                <tr>
+                   <td>\(m\)</td> 
+                   <td>0.230 kg</td>
+                   <td>Mass of pendulum</td>
+                </tr>
+                <tr>
+                   <td>\(L_p\)</td> 
+                   <td>0.3302 m </td>
+                   <td>Pendulum distance from pivot to center of mass</td>
+                </tr>
+                <tr>
+                   <td>\(I_c\)</td> 
+                   <td>\(m L_p^2 /3 \) </td>
+                   <td>Moment of inertia of pendulum about its center</td>
+                </tr>
+                <tr>
+                   <td>\(I_e\)</td> 
+                   <td>\(4m L_p^2 /3 \) </td>
+                   <td>Moment of inertia of pendulum about its end</td>
+                </tr>
+                <tr>
+                   <td>\(K_t\)</td> 
+                   <td>\(7.67 \cdot 10^{-3} N\cdot m/A\) </td>
+                   <td>Motor torque constant</td>
+                </tr>
+                <tr>
+                   <td>\(K_m\)</td> 
+                   <td>\(7.67 \cdot 10^{-3} V\cdot s/rad\) </td>
+                   <td>Motor back EMF constant</td>
+                </tr>
+                <tr>
+                   <td>\(K_v\)</td> 
+                   <td>3.71 </td>
+                   <td>Motor gearbox ratio</td>
+                </tr>
+                <tr>
+                   <td>\(R_m\)</td> 
+                   <td>\(2.6 \Omega \) </td>
+                   <td>Motor winding resistance</td>
+                </tr>
+                <tr>
+                   <td>\(r\)</td> 
+                   <td>\(6.36 \cdot 10^{-3} m\) </td>
+                   <td>Radius of motor gear</td>
+                </tr>
+                <tr>
+                   <td>\(J_m\)</td> 
+                   <td>\(3.9 \cdot 10^{-7} kg\cdot m^2\) </td>
+                   <td>Motor moment of inertia</td>
+                </tr>
+              </table>
+
+          <h4> <span style="font-style: italic">full dynamics of linearized system</span></h4>   
+
+          Using the cart equation of motion \((m_cr^2R_m +K_g^2J_mR_m)\ddot{x} + (K_tK_mK_g^2)\dot{x} = (rK_gK_t)V\) derived from the standard DC motor armature circuit: 
+         
+          <p class="aligncenter"> 
+          With \(F_a = f(V,\dot{x}, \ddot{x})\) as the motor force:
+          </p>
+          <br>
+        
+          <br>  
+          <p class="aligncenter"> 
+          \[(m_cr^2R_m +K_g^2J_mR_m)\ddot{x} + (K_tK_mK_g^2)\dot{x} = (rK_gK_t)V\]
+          
+          \[(m_c + \frac{K_g^2J_mR_m}{r^2R_m})\ddot{x} + (\frac{K_tK_mK_g^2}{r^2R_m})\dot{x} = (\frac{K_gK_t}{R_mr})V\]
+          
+          \[F_a + \frac{K_g^2J_mR_m}{r^2R_m}\ddot{x} + \frac{K_tK_mK_g^2}{r^2R_m}\dot{x} = (\frac{K_gK_t}{R_mr})V\]
+          
+          \[F_a = (\frac{K_gK_t}{R_mr})V - \frac{K_g^2J_mR_m}{r^2R_m}\ddot{x} - \frac{K_tK_mK_g^2}{r^2R_m}\dot{x}\]
+          
+          \[(M+m)\ddot{x} + mL_p\ddot{\theta} = (\frac{K_gK_t}{R_mr})V - \frac{K_g^2J_mR_m}{r^2R_m}\ddot{x} - \frac{K_tK_mK_g^2}{r^2R_m}\dot{x}\]
+          
+          \[mL_p\ddot{x} + \frac{4mL_p^2}{3}\ddot{\theta} - mgL_p\theta = 0\]
+          
+          \[\ddot{x} = -\frac{4}{3} L_p\ddot{\theta} + g\theta\]
+
+          \[\ddot{\theta} = \frac{3}{4rL_p^2}(mgL_p\theta - mL_p\ddot{x}) = \frac{3}{4} (\frac{g}{L_p}\theta - \frac{1}{L_p}\ddot{x}) = \frac{3}{4L_p}(g\theta-\ddot{x})\]
+          </p>
+
+          
+            <table style="width:30em;margin-left:auto;margin-right:auto;">
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  <col span="1" style="width:15em;">
+                  </colgroup>
+                  <tr>
+                     <td>\(P\)</td> 
+                     <td>\[(M+m) + \frac{K_g^2J_mR_m}{r^2R_m}\]</td>
+                  </tr>
+                  <tr>
+                     <td>\(Q\)</td> 
+                     <td>\[\frac{K_gK_t}{R_mr}\]</td>
+                  </tr>
+                  <tr>
+                     <td>\(R\)</td> 
+                     <td>\[\frac{K_tK_mK_g^2}{r^2R_m}\]</td>
+                  </tr>
+            </table>
+          
+
+
+          <p class="aligncenter"> 
+
+          \[P\ddot{x} + mL_p\ddot{\theta} = QV-R\dot{x}\]
+
+          \[P(g\theta - \frac{4}{3}L_p\ddot{\theta}) + mL_p\ddot{\theta} = QV-R\dot{x}\]
+
+          \[Pg\theta + (mL_p-\frac{4}{3}PL_p)\ddot{\theta} = QV-R\dot{x}\]
+
+          \[\ddot{\theta} = \frac{1}{L_p(m-\frac{4}{3}p)}[QV-R\dot{x} - Pg\theta]\]
+
+          \[P\ddot{x}+\frac{3}{4}m(g\theta-\ddot{x}) = QV-R\dot{x}\]
+
+          \[(P-\frac{3}{4}m)\ddot{x} + \frac{3}{4}mg\theta = QV-R\dot{x}\]
+
+          \[\ddot{x} = \frac{1}{P-\frac{3}{4}m} [QV-R\dot{x} - \frac{3}{4}mg\theta]\]
+          </p>
+        
+            <table style="width:30em;margin-left:auto;margin-right:auto;">
+                  <colgroup>
+                  <col span="1" style="width:5em;">
+                  </colgroup>
+                  <tr>
+                     <td>\(\ddot{x}\)</td> 
+                     <td>\[\frac{1}{P-\frac{3}{4}m} [QV-R\dot{x} - \frac{3}{4}mg\theta]\]</td>
+                  </tr>
+                  <tr>
+                     <td>\(\ddot{\theta}\)</td> 
+                     <td>\[\ddot{\theta} = \frac{1}{L_p(m-\frac{4}{3}p)}[QV-R\dot{x} - Pg\theta]\]</td>
+                  </tr>
+            </table>
+
+        <h4> <span style="font-style: italic">state-space representation</span></h4>
+
+        <p>
+
+          \[
+          \begin{bmatrix}
+          \dot{x} \\
+          \ddot{x} \\
+          \dot{\theta} \\
+          \ddot{\theta}
+          \end{bmatrix}
+
+          = 
+
+          \begin{bmatrix}
+          0 & 1 & 0 & 0 \\
+          0 & \frac{R}{P-\frac{3}{4}m} & \frac{3mg}{4(P-\frac{3}{4}m)} & 0 \\
+          0 & 0 & 0 & 1 \\
+          0 & -\frac{R}{L_p(m-\frac{4}{3}p)} & -\frac{Pg}{L_p(m-\frac{4}{3}p)} & 0
+          \end{bmatrix}
+
+          \begin{bmatrix}
+          x \\
+          \dot{x} \\
+          \theta \\
+          \dot{\theta}
+          \end{bmatrix}
+
+          + 
+
+          \begin{bmatrix}
+          0 \\
+          \frac{Q}{P-\frac{3}{4}m} \\
+          0 \\
+          \frac{Q}{L_p(m-\frac{4}{3}P)} 
+          \end{bmatrix}
+          V
+
+          \]
+
+          \[
+
+          \begin{bmatrix}
+          \dot{x} \\
+          \dot{\theta} \\
+          \end{bmatrix}
+
+          = 
+
+          \begin{bmatrix}
+          1 & 0 & 0 & 0 \\
+          0 & 0 & 1 & 0 \\
+          \end{bmatrix}
+
+          \begin{bmatrix}
+          x \\
+          \dot{x} \\
+          \theta \\
+          \dot{\theta}
+          \end{bmatrix}
+
+          + 0\cdot V
+
+
+
+          \]
+         </p>
+
+          <p>
+          The eigenvalues of the state matrix \(A\) are 0, -7.5505, -4.1275, and 4.8657, indicating that the open-loop system is not BIBO stable due to the presence of a pole in the right half-plane (RHP). 
+          </p>
+
+          <p>
+          However, the rank of the system's controllability matrix  \(C = \begin{bmatrix} B & AB & A^2B & A^3B \end{bmatrix}\) is 4, indicating that the system is controllable.
+          </p>
+
+
+
 
         <a name="ppc"></a>
         <h2> <span style="font-style: italic">pole-placement controller design</span></h2>
+
+        <p>
+        We will use a full state-feedback controller to achieve the desired performance specifications. For the purpose of design, we assume that all the state variables are available for measurement and can
+        use them for feedback (i.e. the entire state vector \(\mathbf{x}\) is known). The full-state feedback controller is
+        \(u = -K\mathbf{x}\). The gain matrix \(K\) is chosen such that the closed-loop eigenvalues equal some desired values. 
+
+        </p>
+        <p>
+        We would like our closed-loop eigenvalues to lie at \(s_{1,2} = -2.0 \pm 10j\) and
+        \(s_{3,4} = -1.6 \pm 1.3j\).
+        </p>
+
+        <p>
+        Using the \(A\) and \(B\) matrices derived earlier, we can find the closed-loop system matrix \(A_K = A-BK\) and the feedback gain matrix \(K = \begin{bmatrix} k_1 & k_2 & k_3 & k_4 \end{bmatrix}\). Then, we compute the characteristic polynomial \(P(K,s) = \det(sI-A_K) \) of the closed-loop system and the desired characteristic polynomial \(P_{des}(s) = \prod^4_{i=-1} (s-s_i)\). From there, we can compute \(K\) using MATLAB:
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/Ak.jpg" alt="pendulum fbd" style="width:50%;">
+        </p>
+        <p class="aligncenter">  <img src="pendulum_imgs/k.jpg" alt="pendulum fbd" style="width:50%;">
+        </p>
+
+        <p>
+        With input \(u = K(\mathbf{r} - \mathbf{x}\), the dynamics of the closed-loop system are \(\dot{\mathbf{x}} = A \mathbf{x} + Bu = A_k \mathbf{x} + BK\mathbf{r}\), where \(\mathbf{r}\) is the reference input. Below is the Bode plot of this transfer function: 
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f4-bode.png" alt="pendulum fbd" style="width:75%;">
+        </p>
+
+
+        <p>
+        With a zero reference signal \([0 \, 0 \, 0 \, 0]^T\) and the pendulum starting from a vertical (balanced) position, we manuallly applied small perturbations to evaluate the pendulum's performance. 
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/1-f5.png" alt="pendulum fbd" style="width:75%;">
+        </p>
+
+        <p>
+          We see that the controller seems to overshoot quite a bit with any small perturbations. With any large perturbations, the controller fails completely and the system goes unbounded. The hardware continues to oscillate about the equilibrium point because our theta equilibrium is not stable. If we left the cart alone at equilibrium with no controller, theta would still change because of gravity, therefore we must compensate by moving our cart.
+        </p>
+
+
+        <p>
+        In order to see how well the calculated frequency response matches the actual system response, we used a sinusoidal reference signal \([M\sin\omega t \, 0 \, 0 \, 0]^T\) and frequencies of \(\omega = 1, 2, 5\) rad/s and \(M \approx 0.1\)m with the pendulum starting from vertical and calculated the gain and phase for each of the candidate frequencies from our frequency response (ignoring the offset from the hardware response) and compared them to our measured results below: 
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/1-f6.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/1-f7.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/1-f8.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p>
+        All plots for position should all have unity gain according to the bode plot, however there seems to be a small discrepancy in the \(\omega = 2,5\) plots. This can be explained by the velocity of the cart, and the stopping power of the physical system, which causes overshoot as seen in the plot.
+        </p>
+
+
+        <p>
+        Overall, the performance of the pole-placement controller leaves something to be desired. In order to execute the pole-placement design, we assumed that measurements of all system states were available. 
+        However, we do not actually have access to the full state: we only measure position \(x\) and angle \(\theta\), and estimate \(\dot{x}\) and \(\dot{\theta}\) using derivative blocks in Simulink. This is a poor-quality estimate of \(\dot{x}\) and \(\dot{\theta}\) since the derivative operation amplifies noise, which results in poor-quality control and grinding motors at high frequencies.
+        We will thus correct this error by introducing a Luenberger observer.  
+        </p>
 
 
 
         <a name="lod"></a>
         <h2> <span style="font-style: italic">luenberger observer design</span></h2>
 
+        <p>
+        The full system including the Luenberger observer can be written as:
+
+        \[\dot{\hat{x}} = A\hat{x} + Bu + L(y-\hat{y})\]
+
+        where \(y = Cx\) and \(\hat{y} = C\hat{x}\). The first two terms in the above equation, \(A\hat{x} + Bu\), can be called the predictor and is a replica of the plant dynamics. However, because of uncertainty or error in the plant model, the estimate of the state using only the predictor ("open-loop") will generally not match the actual state of the system. The corrective term \(L(y-\hat{y})\) is thus needed. Together, these form the Luenberger observer. 
+        </p>
+
+        <p>
+        The \(L(y-\hat{y})\) term corrects future estimates of the state based on the present error in estimation. The gain matrix \(L\) can be considered a parameter which weighs the relative importance between the predictor and the corrector in state estimation. Intuitively, a low value for \(L\) is chosen when our confidence in the model (i.e. the predictor) is high and/or confidence in measurement y is low (i.e. when the measurements are noisy) and vice-versa for a high value of \(L\).
+        </p>
+
+        <p>
+        In order to improve the performance of our pole-placement controller, we will design the observer gain matrix \(L\) and use the state estimator for feedback control of the inverted-pendulum system instead of our previous derivative-based approximation. The Luenberger observer will provide a state estimate \(\hat{x}\), which we will use for state feedback \(u(t) = K(r(t)-\hat{x}(t))\).
+        </p>
+
+        <p>
+        The rank of the system's observability matrix  \(O = \begin{bmatrix} C & CA & CA^2 & CA^3 \end{bmatrix}^T\) is 4, indicating that the system is observable.
+        </p>
+
+        <p>
+        The gain \(L\) is chosen such that the matrix \(A − LC\) has eigenvalues in the left half- plane. Further, the exact position of the eigenvalues of \(A − LC\) govern the rate at which the state estimate \(\hat{x}\) converges to the actual state \(x\) of the system. It is desirable that the observer estimate of the state converges to the actual state at least an order of magnitude faster than the system dynamics. This helps the controller obtain a good estimate of the actual state of the system in relatively short time so it can take appropriate control action.
+        </p>
+
+        <p>
+        We want to place the eigenvalues of the observer at \(-10 \pm 15j\) and \(-12 \pm 17j\). Using MATLAB, we find the observer gain L:
+
+        \[\mathtt{L = place(A^T,C^T,poles)^T}\]
+
+        \[
+        L = 
+
+        \begin{bmatrix}
+        16.1595 & -2.3767 \\
+        254.978 & -5.4818 \\
+        15.7136 & 21.0282 \\
+        180.7734 & 378.1934
+        \end{bmatrix}
+
+        \]
+        </p>
+
+        <p>
+        We implemented the observer in Simulink as shown below and simulated the system with 10cm position perturbation and 5 degrees angle perturbation as initial conditions, and found that the observer had estimation error \(e = \hat{x} - x\) of zero: 
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/2-obs-matlab.png" alt="pendulum fbd" style="width:95%;">
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/2-pl-sim-x.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/2-pl-sim-err.png" alt="pendulum fbd" style="width:50%;">
+        </p>
+
+        <p>
+        We then implemented the state feedback controller operating on the state estimate \(\hat{x}\) provided by the Luenberger observer on the hardware. In order to compare our results from the previous controller using derivatives to estimate velocity state with the current controller using the observer to estimate velocity state, we plotted the cart position and rod position for both controllers for a zero reference signal and a zero reference signal with small, manually applied perturbations. 
+        </p>
+
+         <p class="aligncenter">  <img src="pendulum_imgs/non.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/pert.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/derivatives-obs.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p>
+        The data demonstrate that the observer estimate is much smoother and less noisy than the derivative estimate. Comparing the plot above of cart and pendulum velocity from the observer with the plots of cart and pendulum velocity from the previous section (in which the derivative estimate was used), we see that the observer estimate is significantly less sensitive to noise, so we avoid the gear-grinding issue seen in the previous section by using the observer. We also see that \(\theta\) remains slightly closer to zero overall when using the observer when perturbations are present. Although both systems are functional at a baseline level, the observer system demonstrates greater insensitivity to noise overall and avoids damaging the system's gears.    
+        </p>
+        <p>
+        Though the observer does help decrease the overcorrection seen in the pole-placement controller somewhat, the controller performance could still improve further if we designed a controller that takes into account the actuation effort needed to achieve control. If the actuation effort is minimized, we can decrease overcorrection as well. To do this, we designed a new controller using the Linear Quadratic Regulator (LQR) technique.
+        </p>
 
 
         <a name="lqr"></a>
         <h2> <span style="font-style: italic">LQR controller design</span></h2>
+
+        <p>
+        Our pole-placement controller did not take actuation effort into account. Though good system regulation can be achieved by using a high amount of actuation effort (for example, in a proportional controller, higher \(K_p\) and thus greater actuation effort yields a faster rise time), we are limited by power and energy constraints. Ideally, we would like to achieve good system performance while at the same time minimizing the amount of actuation used. We can express this mathematically with a cost functional: 
+        </p>
+
+        <p>
+        \[J = \int^\infty_0 x^TQx + u^TRu dt\]
+        </p>
+
+        <p>
+        where weighting matrices \(Q,R\) are design parameters. 
+        </p>
+
+        <p>
+        The LQR design problem is to design a state-feedback controller K (i.e. for u = −Kx) such that the cost functional J is minimized. The cost functional consists of two terms, the first of which represents the cost of regulating the state x (regulatory term) and the second represents the cost of actuation u (actuation term). Each of these terms depend on a weighting matrix, Q and R, respectively. These matrices are the design parameters, assumed positive semidefinite. The regulatory term penalizes deviations from the desired state (here x = 0), while the actuation term penalizes actuation effort.
+        </p>
+
+        <p>
+        For simplicity, we assume the matrices \(Q,R\) are diagonal: \(Q = \mathrm{diag}(q_1, ..., q_n)\) and \(R = \mathrm{diag}(r_1, ..., r_m)\). Thus, the objective \(J\) reduces to
+
+        \[J = \int^\infty_0 (\sum^n_{i=1} q_ix_i^2+\sum^m_{j=1} r_ju_j^2)dt\]
+        </p>
+
+        <p>
+        The scalars \(q_1, ..., q_n\) and \(r_1, ..., r_m\) can be seen as relative weights between different performance terms in the objective \(J\). For \(Q\) and \(R\) to be positive semidefinite, we need \(q_i \geq 0 \) and \(r_i \geq 0\) for all \(i\). The key design problem of LQR is to translate performance specifications in terms of the rise time, overshoot, bandwidth, etc. into relative weights of the above form. We did this iteratively in both simulation and experimentation, using MATLAB to solve the Algebraic Riccati Equation (ARE) to find the controller gains \(K\).
+        </p>
+
+        <p>
+        As a starting point, we assume  the cart and the pendulum are \(x_0 = 30\) cm and \(\theta_0 = 0.05 \mathrm{~radians} (\approx 2.5 \mathrm{deg})\) displaced from their desired positions \(x_{des} = 0\) and \(\theta_{des} = 0\) at time \(t = 0\), and the objective is to get the system to the desired state as soon as possible, but without using more than 6 volts of input at any point in time. We set the scalars \(q_2\) and \(q_4\) to zero, as we have no inherent restriction on how \(\dot{x}\) and \(\dot{\theta}\) vary with time. Now, in order to use scalars \(q_1\), \(q_3\) and \(r\) as relative weights, we will normalize them based on their initial conditions. The modified weights are:
+
+        \[
+          \bar{q_1} = \frac{q_1}{0.3^2} \mathrm{~~~~~}
+          \bar{q_3} = \frac{q_3}{0.5^2} \mathrm{~~~~~}
+          \bar{r} = \frac{r}{6^2} \mathrm{~~~~~}
+        \]
+
+        The weights have been normalized with square terms because the integrand of our objective functional \(J\) is a quadratic function of \(x\) and \(u\) (so the matrix Q will use \(\bar{q_1}\) and \(\bar{q_3}\), and \(R = \bar{r})\).
+        </p>
+
+        <p>
+        In order to determine how varying the relative magnitude of the weights affected the controller's performance, we found the gain matrix \(K\) that minimizes the objective function and the associated closed-loop pole locations for nominal weights \(q_1 = q_3 = r = 1\) and for a higher relative weight of each weight with all other weights nominal using the \(\mathtt{lqr}\) command in MATLAB. We then implemented these controllers in the physical system and observed its response. The step input used was \(\begin{bmatrix} 0.3 & 0 & 0 & 0 \end{bmatrix}^T\).
+        </p>
+
+        <h4> <span style="font-style: italic">step input with nominal weights</span></h4>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f14.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+        <p class="aligncenter">  <img src="pendulum_imgs/f15.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+        <p class="aligncenter">  <img src="pendulum_imgs/f16.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <h4> <span style="font-style: italic">step input with higher relative weight \(q_1\), other weights nominal</span></h4>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f17.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+        <p class="aligncenter">  <img src="pendulum_imgs/f18.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+        <p class="aligncenter">  <img src="pendulum_imgs/f19.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p>
+        Increasing the \(q_1\) weight forced the \(x\) and \(\theta\) values to converge much faster than in the nominal weight case. The tradeoff for this convergence is the massive overshoot in the form of a large \(x\) differential caused by a large \(u\) input. Moreover, the system seemed to heavily enforce restricted movement of the cart as can be seen in the lower maximum amplitude (after convergence).
+        </p>
+
+        <h4> <span style="font-style: italic">step input with higher relative weight \(q_3\), other weights nominal</span></h4>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f20.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+        <p class="aligncenter">  <img src="pendulum_imgs/f21.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+        <p class="aligncenter">  <img src="pendulum_imgs/f22.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p>
+        Increasing the \(q_3\) weight and leaving the other weights nominal seems to have little effect shape-wise in comparison to the nominal case. When comparing all three plots (\(u, \hat{x}, y\), there is a noticeable amount of "noise-like" effects with regards to the nominal case. This is most likely due to the larger weight on the \(\theta\) value, which makes the system more sensitive to the minute changes in the pendulum's angle. Because this angle changes often and violently, the plots display this "noisy" effect.  Compared to the simulation, the results from running the physical system seem to more prominently display this "noisy" property.
+        </p>
+
+
+        <h4> <span style="font-style: italic">step input with higher relative weight \(r\), other weights nominal</span></h4>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f23.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+        <p class="aligncenter">  <img src="pendulum_imgs/f24.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+        <p class="aligncenter">  <img src="pendulum_imgs/f25.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p>
+        Increasing the \(r\) weight while leaving the other weights nominal heavily restricts the input, \(u\), (ranging from -1.5 to 1.5 vs. -4 to 4) when compared with the nominal case. This, in turn bounds the state \(x\) as well as the output \(y\) to reasonable values without much tradeoff in overshoot or convergence time. Comparing the simulation with the physical experiment, we notice that the physical system never truly converges (as expected with an inverted pendulum) and also the \(y\) value doesn't diverge nearly as much due to the step-input in the physical system as it does in the prelab simulation.
+        </p>
+
+        <h4> <span style="font-style: italic">sinusoidal input with higher relative weight \(q_3\), other weights nominal</span></h4>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f26.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+        <p class="aligncenter">  <img src="pendulum_imgs/f27.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+        <p class="aligncenter">  <img src="pendulum_imgs/f28.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p>
+        Until this point, we thought that performing the LQR with \(q_3 >> q_1 = r\) seemed to be the best configuration for controlling the system. We now know that the better configuration weights the input (increases the \(r\) weight) to ensure that the input does not change as rapidly as shown in the plot below. The \(q_3\) configuration performs poorly in the case of the inverted pendulum as the pendulum angle changes frequently and violently causing "jerky" reactions in the system to compensate. The \(r\) configuration would most likely perform better (as seen in part 4) by limiting changes to the system propagating more smooth controls in both the \(x\) and \(\theta\) states as a result.
+        </p>
+
 
 
 
