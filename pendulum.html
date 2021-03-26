@@ -281,7 +281,7 @@
       <div class="scoot">
 	      <h1> <span style="font-style: italic">self-erecting inverted pendulum</span></h1>
 
-         <p>This was the final project for EE128, Feedback Control, at UC Berkeley in Fall 2018.  </p>
+         <p>This was the final project for EE128, Feedback Control, at UC Berkeley in Fall 2018. Group members were myself (Mia Mirkovic), Sukrit Arora, and Rafael Calleja. </p>
          <div class="res">   
               <p>
               <span style="font-weight: bold; font-size:22px;">Contents</span>
@@ -299,9 +299,6 @@
         <a name="ov"></a>
         <h2> <span style="font-style: italic">overview</span></h2>
 
-          <p>
-          VIDEO HERE
-          </p>
 
           
 
@@ -765,7 +762,7 @@
         </p>
 
         <p>
-        \[J = \int^\infty_0 x^TQx + u^TRu dt\]
+        \[J = \int^\infty_0 (x^TQx + u^TRu )dt\]
         </p>
 
         <p>
@@ -870,10 +867,171 @@
         <a name="int"></a>
         <h2> <span style="font-style: italic">integration</span></h2>
 
+        <p>
+        We elected to use our LQR controller with weights \(q_1 = 10\), \(q_3 = 90\), \(r = 1\) as the balancing controller.
+        </p>
 
 
+        <h3> <span style="font-style: italic">swing-up controller</span></h3>
+
+        <p>
+        We've already designed a controller to maintain the pendulum in a vertical position. Now, we need to design a controller to swing the pendulum into the vertical position: once the swing-up controller manages to position the pendulum almost upright, almost at rest, the balancing controller should take over and maintain the pendulum in a vertical state.
+        </p>
+        
+        <p>
+        For the swing-up controller, we will use an energy-pumping method akin to the one used by K.J. Astrom and K. Furuta in "Swinging up a pendulum by energy control" in Automatica, 36(2):287-295, 2000. The idea is to use the control input to inject into the system the right amount of mechanical energy which will bring the pendulum to the upright position.
+        </p>
+
+        <p>
+        The total mechanical energy of the pendulum (without the cart) \(E(\theta,\dot{\theta})\) such that the total energy is zero when the pendulum is at rest in the upright position, i.e.,  \(E(0,0) = 0\), is given by: 
+        
+        \[
+          E(\theta,\dot{\theta}) = \frac{1}{2} J + mgL_p(\cos \pi -1)
+        \]
+        </p> 
+
+        <p>
+        This indicates that the energy \(E(\pi,0)\) of the pendulum at rest hanging downward is \(-2mgL_p\) and the derivative of the total energy of the pendulum is \(-mL_p\ddot{x}\dot{\theta}\cos(\theta)\), where \(\ddot{x}\) is the acceleration of the pendulum's pivot point. Therefore, to increase the energy of the system as fast as possible, we would like to apply maximal positive acceleration when \(\dot{\theta}\cos(\theta) < 0\), and maximal negative acceleration when \(\dot{\theta}\cos(\theta) > 0\). The relation between acceleration and voltage applied to the cart motor is given by
+        </p>
+
+        <p>
+        \[ \ddot{x} = \alpha V - \beta \dot{x} - \gamma \theta
+        \]
+        </p>
+
+        <p>
+        from standard DC motor dynamics, where \(\alpha > 0\), \(\beta\), and \(\gamma\) are constants depending on the physical parameters of the system. From this relationship, we observe \(\ddot{x}\) is maximal when V is maximal. This results in the following bang-bang control policy:
+
+        \[ V = 
+        \begin{cases}
+        0 & \mathrm{when~} E(\theta,\dot{\theta}) \geq 0 \\
+        V_{max} & \mathrm{when~} E(\theta,\dot{\theta}) < 0 \mathrm{~and~} \dot{\theta}\cos\theta < 0 \\
+        -V_{max} & \mathrm{when~} E(\theta,\dot{\theta}) < 0 \mathrm{~and~} \dot{\theta}\cos\theta > 0
+        \end{cases}
+        \]
+        </p>
+
+        <p>
+        where \(V_{max} = 6V\).
+        </p>
+
+        <h4> <span style="font-style: italic">obtaining derivatives</span></h4>
+
+        <p>
+        Since numerical derivatives of position and angle are of poor quality, we built an observer to remedy this issue for the balancing controller. However, this observer uses the linear system model, and is therefore only valid for \(\theta \approx 0\). This will not work for the swing-up controller since we are using the full range \(\theta \in [0,2\pi)\), so in order to take the nonlinearity of the system into account, we will instead use a dynamical system approximating a derivative for obtaining estimates of \(\dot{x}\) and \(\dot{\theta}\). 
+        </p>
+
+        <p>
+        The derivative operation \(\dot{x}(t)\) with zero initial conditions is \(sX(s)\) in the Laplace domain. Since we cannot implement a pure differentiator with transfer function \(G(s) = s\) in MATLAB, we will approximate it by the transfer function 
+
+        \[ D(s) = sH_{lp}(s) = s\frac{1}{c_{lp}s +1}\] 
+        </p>
+
+        <p>
+        with parameter \(c_{lp}\) (lp for low-pass). This represents a differentiatior combines with a low-pass filter. However, multiplying by the low-pass filter results in a phase shift. We need to design this low-pass/differentiator to keep the phase shift small without overly attenuating the frequencies of interest. To do so, we found the largest value of \(c_{lp}\) such that the phase shift at the natural frequency \(\omega_0 = \sqrt{\frac{g}{l}}\) is less than or equal to 5 degrees:
+        </p>
+
+        <p class="aligncenter">
+        \(H(s) = \frac{s}{c_{lp}s + 1}\)
+        <br>
+        <br>
+        \(\omega_0 = \sqrt{\frac{g}{l}} = \sqrt{\frac{9.8}{0.6609}} = 3.85\)
+        <br>
+        <br>
+        \(\angle H(j\omega) = |-\tan^{-1}(c_{lp}\omega_0)| \leq 5\)
+        <br>
+        <br>
+        \(c_{lp}\omega_0 \leq \tan(5)\)
+        <br>
+        <br>
+        \(c_{lp} \leq \frac{\tan(5)}{\omega_0}\)
+        <br>
+        <br>
+        \(c_{lp}=0.0227\)
+        </p>
+
+        <h4> <span style="font-style: italic">implementing the swing-up controller on the hardware</span></h4>
+
+        <p>
+        The interface to the pendulum hardware is shown in Figure 29. We use the dynamical system described in the previous section to obtain estimates of \(\dot{x}\) and \(\dot{\theta}\) in the "Derivative_x" and "Derivative_theta" blocks. The "Angle Initialization" block (shown in detail in Figure 30) is used to transform the coordinates of the system such that \(\theta = 0\) in the "up" position by performing the transformation \(\theta =\mathrm{mod}(\theta', 2\pi) - \pi\), where \(\theta'\) is the angle reading from the encoder after the conversion factor. This is necessary so that the angle does not continuously increase, preventing the controller from forcing the pendulum to make an equal number of clockwise and counterclockwise full rotations.
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f29.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f3031.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p>
+        The mode selector block is shown in Figure 31. In this block we check whether the absolute value of \(\theta\) is less than some threshold \(\mathtt{thresh}\) and choose the value of the mode signal accordingly. In particular, we want the following behavior:
+
+        \[\mathrm{mode} = 
+        \begin{cases}
+        1 & \mathrm{if ~} \lvert \theta \rvert \leq \mathtt{thresh} \\
+        -1 & \mathrm{otherwise}
+        \end{cases}
+        \]
+        </p>
+
+        <p>
+        The mode signal is used to switch between Swing-Up and stabilizing controller, and also to switch to using the state estimate \(\hat{x}(t)\) provided by the observer for the stabilizing control. We elected to use \(\mathtt{thresh} = 15\) degrees.
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f32.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p>
+        We tuned our swing-up controller (Figure 32) by weighting the first term in our energy function by 0.8 to better estimate the accumulated energy by taking into account frictional losses. 
+        We tuned the proportional gain \(\mathtt{kpump}\) to the minimum value that saturated most inputs in order to avoid oversensitivity to small changes in energy, as having too high a gain caused the cart to make small lateral shifts out of phase with the pendulum's motion that prevented it from gaining adequate energy. 
+        The leftmost switch allows the cart to move to the right with the maximum amount of force applied for the first 50 ms before switching to using the swing-up controller to allow all parts of the system to properly initialize before applying control. 
+        The final switch makes the system stop increasing the pendulum energy as soon as it is greater than or equal to zero.
+        </p>
+
+        <h4> <span style="font-style: italic">implementing the balancing controller on the hardware</span></h4>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f33.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p>
+        
+        The delay after the mode selector ensures the mode switches at the correct timestep, as the mode selector value is calculated before the current cycle completes and may cause the system to switch from swing-up to vertical before the observed state is fed back into the system.
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f34.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p>
+        Figure 34 shows the observer subsystem. The switching part (on the left of the figure) is necessary to ensure that the observer is only in use when the linearization of the system is reasonably accurate (i.e. when the mode signal is non-negative, which is the case whenever \( \lvert \theta \rvert \leq \mathtt{thresh}\). If \( \lvert \theta \rvert > \mathtt{thresh}\), the observer is provided with zero voltage input signal, \(V = 0\), and zero output signal, \(y = [0 \mathrm{~} 0]^T \). 
+
+        As soon as mode = 1, i.e. when \( \lvert \theta \rvert \leq \mathtt{thresh}\), the observer is provided with the true inputs V and the true system output y. Note that this will force the observer state \(\hat{x}\) to converge to zero whenever the pendulum is not near its upright position (this ensures that the observer is only used when the linearized model is valid). When the pendulum gets close to the upright position \((\theta \approx 0)\), then the observer will converge quickly to the true state \(x\). The main point here is that if the observer were to run the whole time, the estimate \(\hat{x}\) might diverge since the linear model used in the observer is not a good approximation anymore.
+        </p>
 
 
+        <h3> <span style="font-style: italic">results</span></h3>
+        <p>
+        The plots below show the data collected for the run shown in the video.
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f35.png" alt="pendulum fbd" style="width:100%;">
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f36.png" alt="pendulum fbd" style="width:90%;">
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f37.png" alt="pendulum fbd" style="width:95%;">
+        </p>
+
+        <p class="aligncenter">  <img src="pendulum_imgs/f38.png" alt="pendulum fbd" style="width:85%;">
+        </p>
+
+        <p>
+        The video shows that the pendulum swings in circles a few times before settling upright for \(\mathtt{thresh} = 15\) degrees. This may be fixed by increasing the angle threshold so that the system switches to the vertical controller sooner.
+        </p>
+
+        <a name="vid"></a>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/MyIljPFMolQ" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+        
 
       </div>
 

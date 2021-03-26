@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="icon" href="imgs/favicon.ico">
+  <script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link rel="icon" href="imgs/favicon.ico">
       <style>
          body {
             background-color: #FFFFFF;
@@ -27,15 +30,19 @@
                   font-style: normal; 
                   font-variant: normal; 
                   font-weight: bold; 
-                  line-height: 0.9; } 
+                  line-height: 0.9; 
+                  margin-bottom:0px;
+} 
             h3 { 
                   font-color: #202C39;
                   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
-                  font-size: 20px; 
-                  font-style: normal; 
+                  font-size: 18px; 
+                  font-style: italic; 
                   font-variant: normal; 
                   font-weight: bold; 
-                  line-height: 0.9; } 
+                  line-height: 0.9;
+                  margin-bottom:0px;
+                  margin-top:0px; } 
             p { 
                   font-color: #202C39;
                   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
@@ -44,7 +51,46 @@
                   font-variant: normal; 
                   font-weight: 400; 
                   line-height: 1.15; 
+                  
+
             } 
+            p2 { 
+                  font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 12px; 
+                  font-style: italic; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15; 
+                 
+
+
+            } 
+            sub {
+                 font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 10px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400;  
+            }
+            sup {
+                 font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 8px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400;  
+            }
+            footnote {
+                 font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 11px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15; 
+            }
             blockquote { 
                   font-color: #202C39;
                   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
@@ -65,16 +111,19 @@
             }
       hr { 
             display: block;
-            background-color: #283845;
+            background-color: #B8B08D;
             border: none;
             height:1px;
             }
 
+
       table {
            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
            border-collapse: collapse;
-           width: 565px;
+           width: 100%;
            padding-left: 0.5em;
+           margin: 0em;
+           font-size: 12px;
            }
       td, th {
         border: 1px solid #B8B08D;
@@ -83,47 +132,79 @@
         background-color: #F2F0E6;
       }
       img {
-        border-radius: 50%;
+        
        }
 
+      .cell {
+        display: grid;
+        width: max-content;
+        justify-content: space-between;
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 1fr;
+        
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><line x1='0' y1='0' x2='100' y2='100' stroke='#B8B08D' vector-effect='non-scaling-stroke'/></svg>");
+        background-size: 100% 100%;
+        
+      }
+
+      .cell--topRight {
+        grid-column-start: 2;
+        text-align: right;
+      }
+
+      .cell--bottomLeft {
+        grid-column-start: 1;
+      }
+
       a.a:link {
-      		text-decoration: none;
+          text-decoration: none;
             color: #202C39;
       }
 
       a.a:visited {
-      		text-decoration: none;
+          text-decoration: none;
             color: #202C39;
       }
       a.a:hover {
-      		text-decoration: none;
+          text-decoration: none;
             color: #D5A021;
       }
 
       a.b:link {
-		text-decoration: underline;
+    text-decoration: underline;
         color: #F2F0E6;
       }
       a.b:visited {
-      		text-decoration: none;
+          text-decoration: none;
             color: #F2F0E6;
       }
       a.b:hover {
-      		text-decoration: none;
+          text-decoration: none;
             color: #D5A021;
       }
 
       .scoot {
-      		padding-left: 5em;
-	      	padding-top: 10em;
+          padding-left: 5em;
+          padding-top: 10em;
       }
       .scoot1 {
-      		padding-left: 5em;
+          padding-left: 2em;
+          padding-right: 4em;
+                
+      }
+
+      p.aligncenter{
+        text-align:center;
+      }
+
+      .center {
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .menu {
-      		padding-left: 3.25em;
-      		word-spacing: 1em;
+          padding-left: 3.25em;
+          word-spacing: 1em;
             font-color: #202C39;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
             font-size: 24px; 
@@ -134,7 +215,7 @@
       }
 
       .announce-head {
-      	border: 0;
+        border: 0;
         width: 550px;
         padding: 0.5em;
         background-color: #283845;
@@ -145,7 +226,7 @@
         line-height: 0.9;
       }
       .announce{
-      	border: 0;
+        border: 0;
         width: 550px;
         padding: 0.5em;
         margin-top: -1em;
@@ -157,27 +238,51 @@
         font-size: 18px;
         line-height: 1.1;
       }
+      .res{
+        border: 1px solid #B8B08D;
+        width: 85%;
+        padding: 0.5em;
+        padding-right:2em;
+        padding-left:1.75em;
+        padding-bottom:1em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        background-color: #F2F0E6;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #202C39;
+        font-weight:14px;
+        line-height: 1.15;
+      }   
       ul.a{
-  			list-style-type: square;
+        list-style-type: square;
             list-style-position: outside;
             color: #202C39;  
-		}
+    }
         ul.b{
           list-style-type: square;
           list-style-position: outside;
           color: #F2F0E6;  
         }
      li{
-     	padding-bottom: 0.5em;
+      padding-bottom: 0.5em;
+        font-color: #202C39;
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+                  font-size: 14px; 
+                  font-style: normal; 
+                  font-variant: normal; 
+                  font-weight: 400; 
+                  line-height: 1.15; 
      }
-
       </style>
    </head>
 
    <body>
 
       <div class="scoot">
-	      <h1> <span style="font-style: italic">projects</span></h1>
+	      <h1> <span style="font-style: italic">software-defined radio tx/rx</span></h1>
+
+        <p>This was the final project for EE123, Feedback Control, at UC Berkeley in Spring 2019. </p>
+
       </div>
 
 
